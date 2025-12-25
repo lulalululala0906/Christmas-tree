@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometric Christmas Tree</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #020205; }
+        #root { width: 100%; height: 100%; }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "three": "https://esm.sh/three@^0.182.0",
+    "@react-three/fiber": "https://esm.sh/@react-three/fiber@^9.4.2",
+    "@react-three/drei": "https://esm.sh/@react-three/drei@^10.7.7",
+    "@react-three/postprocessing": "https://esm.sh/@react-three/postprocessing@^3.0.4",
+    "@mediapipe/tasks-vision": "https://esm.sh/@mediapipe/tasks-vision@^0.10.22-rc.20250304"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- 
+      Native Audio Element 
+      - playsinline: Critical for iOS inline playback
+      - loop: Auto repeat
+      - preload: Ready to play immediately
+    -->
+    <audio id="bgm" loop playsinline preload="auto" style="display: none;">
+        <source src="https://lulalululala.xyz/ChristmasMusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const audio = document.getElementById('bgm');
+        audio.volume = 0.5;
+
+        // Universal Auto-Play Fix Strategy
+        function forceSapriPlay() {
+            // Attempt to play
+            audio.play().then(() => {
+                // If successful, remove all listeners to prevent console spam
+                ["click", "touchstart", "keydown", "pointerdown"].forEach(event => 
+                    window.removeEventListener(event, forceSapriPlay)
+                );
+            }).catch(err => {
+                // Autoplay blocked - waiting for user interaction
+                console.log("Audio autoplay blocked, waiting for interaction...");
+            });
+        }
+
+        // 1. Try immediate play (Works for Chrome with high Media Engagement Index)
+        forceSapriPlay();
+
+        // 2. Listen for ANY interaction (Safari, Mobile, Edge, Firefox)
+        // We capture: Click, Touch, Keypress, and Pointer events (for Surface/Edge)
+        window.addEventListener('click', forceSapriPlay);
+        window.addEventListener('touchstart', forceSapriPlay);
+        window.addEventListener('keydown', forceSapriPlay);
+        window.addEventListener('pointerdown', forceSapriPlay);
+
+        // 3. WeChat / Weixin Built-in Browser Support
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            audio.play();
+        }, false);
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

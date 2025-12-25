@@ -1,0 +1,29 @@
+/* 配置 Inter 400 常规字体 */
+@font-face {
+  font-family: 'Inter'; /* 字体名称，后续样式中需统一使用该名称 */
+  src: url('/fonts/inter-v12-latin-400.woff2') format('woff2'); /* 字体路径（public 根目录开始） */
+  font-weight: 400; /* 对应字体粗细 */
+  font-style: normal; /* 正常样式，无需修改 */
+  font-display: swap; /* 优化字体加载体验，避免页面闪烁 */
+}
+
+/* 配置 Inter 900 粗体字体 */
+@font-face {
+  font-family: 'Inter'; /* 统一字体名称，通过 font-weight 区分粗细 */
+  src: url('/fonts/inter-v12-latin-900.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* （可选）全局默认字体配置，确保项目使用本地化 Inter 字体 */
+{
+  margin: 0;
+    padding: 0;
+      font-family: 'Inter', sans-serif; /* 优先使用 Inter 字体， fallback 为系统无衬线字体 */
+}
+
+/* 原有 Tailwind 指令等内容保留 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
